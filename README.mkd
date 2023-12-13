@@ -1,7 +1,7 @@
-#Dungeon Crawler
+# Dungeon Crawler
 
 Dungeon Crawler is 3D project created using OpenGL.
 
-##How to compile
+## How to compile
 
 I'm using CMake and Ninja
