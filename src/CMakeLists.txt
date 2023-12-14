@@ -48,6 +48,8 @@ add_definitions(
 
 add_executable(DungeonCrawler 
 	game/main.cpp
+	game/main.h
+	game/window.h
 	assets/shaders/FragmentShader.glsl
 	assets/shaders/VertexShader.glsl
 	common/shader.cpp
