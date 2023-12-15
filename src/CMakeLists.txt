@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 3.5)
 project (DungeonCrawler)
 
 find_package(OpenGL REQUIRED)
@@ -15,7 +15,7 @@ endif()
 
 add_subdirectory (external)
 
-cmake_policy(SET CMP0026 OLD)
+#cmake_policy(SET CMP0026 OLD)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/external/rpavlik-cmake-modules-fe2273")
 include(CreateLaunchers)
 include(MSVCMultipleProcessCompile)
@@ -48,14 +48,11 @@ add_definitions(
 
 add_executable(DungeonCrawler 
 	game/main.cpp
-	game/main.h
-	game/window.h
+	game/window.cpp
 	assets/shaders/FragmentShader.glsl
 	assets/shaders/VertexShader.glsl
 	common/shader.cpp
-	common/shader.hpp
 	common/controls.cpp
-	common/controls.hpp
 )
 
 target_link_libraries(DungeonCrawler

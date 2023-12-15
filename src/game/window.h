@@ -1,20 +1,20 @@
-#ifndef MY_WINDOW_H
-#define MY_WINDOW_H
+#pragma once
 
+#include <stdio.h>
+#include <stdlib.h>
+
+// Include GLEW
 #include <GL/glew.h>
+
+// Include GLFW
 #include <glfw3.h>
-GLFWwindow* window;
-GLuint VertexArrayID, vertexbuffer, vertexbuffer_size, programID;
-// GLuint VertexArrayID;
-// GLuint vertexbuffer_size;
-// GLuint programID;
-GLuint MatrixID, ViewMatrixID, ModelMatrixID;
 
+// Include GLM
+#include <glm/glm.hpp>
+using namespace glm;
 
-bool initializeWindow(int width, int height, const char * screen_title);
+GLFWwindow*  initializeWindow(int width, int height, const char * screen_title);
 bool initializeVertexbuffer();
+void updateAnimationLoop();
 bool cleanupVertexbuffer();
 bool closeWindow();
-void updateAnimationLoop();
-
-#endif

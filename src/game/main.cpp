@@ -11,6 +11,13 @@
 // Include GLFW
 #include <glfw3.h>
 
+GLFWwindow* window;
+GLuint VertexArrayID, vertexbuffer, vertexbuffer_size, programID;
+// GLuint VertexArrayID;
+// GLuint vertexbuffer_size;
+// GLuint programID;
+GLuint MatrixID, ViewMatrixID, ModelMatrixID;
+
 // Include GLM
 #include <glm/glm.hpp>
 using namespace glm;
@@ -20,8 +27,8 @@ using namespace glm;
 
 int main( void )
 {
-	
-	if(!initializeWindow(1024, 768, "Dungeon Crawler")) return -1;
+	window = initializeWindow(1024, 768, "Dungeon Crawler"); 
+	if(!window) return -1;
 	// Create and compile our GLSL program from the shaders
 	programID = LoadShaders( "../src/assets/shaders/VertexShader.glsl", "../src/assets/shaders/FragmentShader.glsl" );
 	MatrixID = glGetUniformLocation(programID, "MVP");
@@ -44,47 +51,49 @@ int main( void )
 	closeWindow();
 
 	return 0;
+	
 }
 
-bool initializeWindow(int width, int height, const char * screen_title){
-	if( !glfwInit() )
-	{
-		fprintf( stderr, "Failed to initialize GLFW\n" );
-		getchar();
-		return false;
-	}
+// bool initializeWindow(int width, int height, const char * screen_title){
+// 	if( !glfwInit() )
+// 	{
+// 		fprintf( stderr, "Failed to initialize GLFW\n" );
+// 		getchar();
+// 		return false;
+// 	}
 
 
-	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+// 	glfwWindowHint(GLFW_SAMPLES, 4);
+// 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+// 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+// 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
+// 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	// Open a window and create its OpenGL context
-	window = glfwCreateWindow(width, height, screen_title, NULL, NULL);
-	if( window == NULL ){
-		fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
-		getchar();
-		glfwTerminate();
-		return false;
-	}
-	glfwMakeContextCurrent(window);
+// 	// Open a window and create its OpenGL context
+// 	window = glfwCreateWindow(width, height, screen_title, NULL, NULL);
+// 	if( window == NULL ){
+// 		fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
+// 		getchar();
+// 		glfwTerminate();
+// 		return false;
+// 	}
+// 	glfwMakeContextCurrent(window);
 
-	// Initialize GLEW
-	glewExperimental = true; // Needed for core profile
-	if (glewInit() != GLEW_OK) {
-		fprintf(stderr, "Failed to initialize GLEW\n");
-		getchar();
-		glfwTerminate();
-		return false;
-	}
+// 	// Initialize GLEW
+// 	glewExperimental = true; // Needed for core profile
+// 	if (glewInit() != GLEW_OK) {
+// 		fprintf(stderr, "Failed to initialize GLEW\n");
+// 		getchar();
+// 		glfwTerminate();
+// 		return false;
+// 	}
 
-	// Ensure we can capture the escape key being pressed below
-	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	return true;
-}
+// 	// Ensure we can capture the escape key being pressed below
+// 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+// 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+// 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+// 	return true;
+// }
 
 bool initializeVertexbuffer()
 {
