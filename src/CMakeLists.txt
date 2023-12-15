@@ -54,6 +54,8 @@ add_executable(DungeonCrawler
 	assets/shaders/VertexShader.glsl
 	common/shader.cpp
 	common/shader.hpp
+	common/controls.cpp
+	common/controls.hpp
 )
 
 target_link_libraries(DungeonCrawler
