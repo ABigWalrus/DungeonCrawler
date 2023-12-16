@@ -1,18 +1,16 @@
 #version 330 core
 
-in vec3 pos_color;
+in vec2 UV;
 // Ouput data
 out vec3 color;
+
+uniform sampler2D myTextureSampler;
 
 void main()
 {
 
 	// Output color = red 
-	if(pos_color.x <= 0.5f && pos_color.z <= 0.5f){
-		color = vec3(0.3f, 0.8f, 0.6f);
-	}else{
-		color = pos_color;
-	}
+	color = texture(myTextureSampler, UV).rgb;
 	
 
 }
