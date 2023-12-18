@@ -16,28 +16,24 @@
 
 
 
-GraphicObject::GraphicObject(): hasTexture(false), M(glm::mat4(1.0f)){
-    // std::cout << "Graphic Object was created\n";
-    
-    // glGenVertexArrays(1, &vertexArrayID);
-}
+GraphicObject::GraphicObject(): hasTexture(false), M(glm::mat4(1.0f)){}
 
 GraphicObject::~GraphicObject(){}
 
 bool GraphicObject::initializeVAO(){
-    glGenVertexArrays(1, &vertexArrayID);
+    if(vertexArrayID == -1){    // Check if vertextArray was initialized
+        glGenVertexArrays(1, &vertexArrayID);
+    }
     return true;
 }
 
 bool GraphicObject::setVertices(std::vector<glm::vec3> vertices){
-    glGenVertexArrays(1, &vertexArrayID);
+    this->initializeVAO();
     glBindVertexArray(vertexArrayID);
     glGenBuffers(1, &vertexBufferID);
     vertextBufferSize = vertices.size() * sizeof(glm::vec3);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
     glBufferData(GL_ARRAY_BUFFER, vertextBufferSize, &vertices[0], GL_STATIC_DRAW);
-    // glEnableVertexAttribArray(0);
-    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
     return true;
 }
 
@@ -65,11 +61,11 @@ void GraphicObject::draw(){
         glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
     }
-    glDrawArrays(GL_TRIANGLES, 0, vertextBufferSize); // 3 indices starting at 0 -> 1 triangle
+    glDrawArrays(GL_TRIANGLES, 0, vertextBufferSize);
     glDisableVertexAttribArray(0);
 }
 
-// void GraphicObject::moveObject(){
-    
-//     M = M * glm::translate(glm::mat4(), glm::vec3(0.001f, 0.0f, 0.0f));
-// }
+void GraphicObject::cleanup(){
+    glDeleteBuffers(1, &vertexBufferID);
+    glDeleteVertexArrays(1, &vertexArrayID);
+}

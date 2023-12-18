@@ -1,6 +1,7 @@
 #include "main.h"
 #include "window.h"
 #include "GraphicObject.h"
+#include "Screen.h"
 
 // Include standard headers
 #include <stdio.h>
@@ -13,13 +14,6 @@
 // Include GLFW
 #include <glfw3.h>
 
-GLFWwindow* window;
-GLuint VertexArrayID, vertexbuffer, vertexbuffer_size, programID;
-// GLuint VertexArrayID;
-// GLuint vertexbuffer_size;
-// GLuint programID;
-GLuint MatrixID, ViewMatrixID, ModelMatrixID;
-
 // Include GLM
 #include <glm/glm.hpp>
 using namespace glm;
@@ -27,13 +21,21 @@ using namespace glm;
 #include <common/shader.hpp>
 #include <common/controls.hpp>
 
-GraphicObject boden;
+// Screen startin_screen;
+
+GLFWwindow* window;
+// GLuint VertexArrayID, vertexbuffer, vertexbuffer_size, programID;
+// GLuint VertexArrayID;
+// GLuint vertexbuffer_size;
+// GLuint programID;
+// GLuint MatrixID, ViewMatrixID, ModelMatrixID;
 
 int main( void )
-{
-	window = initializeWindow(1024, 768, "Dungeon Crawler"); 
+{	
+	window = initializeWindow(1024, 768, "Dungeon Crawler");
 	if(!window) return -1;
-	boden = GraphicObject();
+	Screen main_screen{window};
+	GraphicObject boden = GraphicObject();
 	//boden.initializeVAO();
 	std::vector< glm::vec3 > vertices = std::vector< glm::vec3 >();
 	vertices.push_back({ -10.0f, -0.8f, -10.0f });
@@ -43,7 +45,7 @@ int main( void )
 	vertices.push_back({ 10.0f,  -0.8f, 10.0f });
 	vertices.push_back({ -10.0f, -0.8f, 10.0f });
 	boden.setVertices(vertices);
-	boden.textureSamplerID = glGetUniformLocation(programID, "myTextureSampler");
+	// boden.textureSamplerID = glGetUniformLocation(programID, "myTextureSampler");
 	float scaling = 5.0f;
 	std::vector< glm::vec2 > uvbufferdata;
 	uvbufferdata.push_back({ 0.0f, 0.0f });
@@ -54,14 +56,16 @@ int main( void )
 	uvbufferdata.push_back({ scaling,0.0f });
 	boden.setTexture(uvbufferdata, "../src/assets/textures/brick_2.bmp");
 	// Create and compile our GLSL program from the shaders
-	programID = LoadShaders( "../src/assets/shaders/VertexShader.glsl", "../src/assets/shaders/FragmentShader.glsl" );
-	MatrixID = glGetUniformLocation(programID, "MVP");
-	ViewMatrixID = glGetUniformLocation(programID, "V");
-	ModelMatrixID = glGetUniformLocation(programID, "M");
+	// programID = LoadShaders( "../src/assets/shaders/VertexShader.glsl", "../src/assets/shaders/FragmentShader.glsl" );
+	// MatrixID = glGetUniformLocation(programID, "MVP");
+	// ViewMatrixID = glGetUniformLocation(programID, "V");
+	// ModelMatrixID = glGetUniformLocation(programID, "M");
+	main_screen.setGraphicObject(&boden);
+	main_screen.loadShaders();
 	
 	//initializeVertexbuffer();
 	do{
-		updateAnimationLoop();
+		main_screen.updateAnimationLoop();
 	} // Check if the ESC key was pressed or the window was closed
 	while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
 		   glfwWindowShouldClose(window) == 0 );
@@ -70,9 +74,9 @@ int main( void )
 	// glDeleteBuffers(1, &vertexbuffer);
 	// glDeleteVertexArrays(1, &VertexArrayID);
 	// glDeleteProgram(programID);
-	cleanupVertexbuffer();
+	main_screen.cleanup();
 	// Close OpenGL window and terminate GLFW
-	closeWindow();
+	glfwTerminate();
 
 	return 0;
 	
@@ -141,60 +145,60 @@ int main( void )
 //   return true;
 // }
 
-void updateAnimationLoop(){
+// void updateAnimationLoop(){
 			
-	glClear( GL_COLOR_BUFFER_BIT );
+// 	glClear( GL_COLOR_BUFFER_BIT );
 
-	// Use our shader
-	glUseProgram(programID);
-	computeMatricesFromInputs();
-	glm::mat4 ProjectionMatrix = getProjectionMatrix();
-	glm::mat4 ViewMatrix = getViewMatrix();
-	glm::mat4 MVP = ProjectionMatrix * ViewMatrix * boden.M;
+// 	// Use our shader
+// 	glUseProgram(programID);
+// 	computeMatricesFromInputs();
+// 	glm::mat4 ProjectionMatrix = getProjectionMatrix();
+// 	glm::mat4 ViewMatrix = getViewMatrix();
+// 	glm::mat4 MVP = ProjectionMatrix * ViewMatrix * boden.M;
 
-	// Send our transformation to the currently bound shader, 
-	// in the "MVP" uniform
-	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-	glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &boden.M[0][0]);
-	glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
+// 	// Send our transformation to the currently bound shader, 
+// 	// in the "MVP" uniform
+// 	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+// 	glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &boden.M[0][0]);
+// 	glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
 
-	// if(glfwGetKey(window, GLFW_KEY_O)) boden.moveObject();
+// 	// if(glfwGetKey(window, GLFW_KEY_O)) boden.moveObject();
 
-	// // 1rst attribute buffer : vertices
-	// glEnableVertexAttribArray(0);
-	// glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	// glVertexAttribPointer(
-	// 	0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-	// 	3,                  // size
-	// 	GL_FLOAT,           // type
-	// 	GL_FALSE,           // normalized?
-	// 	0,                  // stride
-	// 	(void*)0            // array buffer offset
-	// );
+// 	// // 1rst attribute buffer : vertices
+// 	// glEnableVertexAttribArray(0);
+// 	// glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+// 	// glVertexAttribPointer(
+// 	// 	0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+// 	// 	3,                  // size
+// 	// 	GL_FLOAT,           // type
+// 	// 	GL_FALSE,           // normalized?
+// 	// 	0,                  // stride
+// 	// 	(void*)0            // array buffer offset
+// 	// );
 
-	// // Draw the triangle !
-	// glDrawArrays(GL_TRIANGLES, 0, 6); // 3 indices starting at 0 -> 1 triangle
+// 	// // Draw the triangle !
+// 	// glDrawArrays(GL_TRIANGLES, 0, 6); // 3 indices starting at 0 -> 1 triangle
 
-	// glDisableVertexAttribArray(0);
-	boden.draw();
+// 	// glDisableVertexAttribArray(0);
+// 	boden.draw();
 	
 
-	// Swap buffers
-	glfwSwapBuffers(window);
-	glfwPollEvents();
+// 	// Swap buffers
+// 	glfwSwapBuffers(window);
+// 	glfwPollEvents();
 
-}
+// }
 
-bool cleanupVertexbuffer()
-{
-  // Cleanup VBO
-  glDeleteBuffers(1, &boden.vertexBufferID);
-  glDeleteVertexArrays(1, &boden.vertexArrayID);
-  return true;
-}
+// bool cleanupVertexbuffer()
+// {
+//   // Cleanup VBO
+//   glDeleteBuffers(1, &boden.vertexBufferID);
+//   glDeleteVertexArrays(1, &boden.vertexArrayID);
+//   return true;
+// }
 
-bool closeWindow()
-{
-  glfwTerminate();
-  return true;
-}
+// bool closeWindow()
+// {
+//   glfwTerminate();
+//   return true;
+// }

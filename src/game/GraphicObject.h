@@ -10,7 +10,7 @@
 
 struct GraphicObject
 {
-    GLuint vertexArrayID;
+    GLuint vertexArrayID = -1;
     GLuint vertexBufferID, vertextBufferSize;
     GLuint uvBufferID;
     GLuint textureID, textureSamplerID;
@@ -25,6 +25,7 @@ struct GraphicObject
     bool setVertices(std::vector< glm::vec3 >);
     bool setTexture(std::vector< glm::vec2 >, std::string bmpPath);
     void draw();
+    void cleanup();
     // void moveObject();
 
 };
