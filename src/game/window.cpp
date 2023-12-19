@@ -51,6 +51,7 @@ GLFWwindow* initializeWindow(int width, int height, const char * screen_title){
 
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	return window;
 }

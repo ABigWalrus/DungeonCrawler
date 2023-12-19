@@ -15,7 +15,6 @@ struct GraphicObject
     GLuint uvBufferID;
     GLuint textureID, textureSamplerID;
     bool hasTexture;
-    //const GLfloat vertex_buffer_data[];
     glm::mat4 M;
 
     GraphicObject();
@@ -26,6 +25,4 @@ struct GraphicObject
     bool setTexture(std::vector< glm::vec2 >, std::string bmpPath);
     void draw();
     void cleanup();
-    // void moveObject();
-
 };
