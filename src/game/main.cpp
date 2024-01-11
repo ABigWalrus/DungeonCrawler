@@ -25,7 +25,7 @@ int main( void )
 {	
 	window = initializeWindow(1024, 768, "Dungeon Crawler");
 	if(!window) return -1;
-	Menu_Screen test_screen{window};
+	MenuScreen test_screen{window, "../src/assets/textures/menu.bmp"};
 
 	Screen main_screen{window};
 	
@@ -39,56 +39,49 @@ int main( void )
 	vertices.push_back({ -10.0f, -0.8f, 10.0f });
 	boden.setVertices(vertices);
 
-	float scaling = 1.0f;
+	float scaling = 10.0f;
 	std::vector< glm::vec2 > uvbufferdata;
 	uvbufferdata.push_back({ 0.0f, 0.0f });
-	uvbufferdata.push_back({ 0.0f, scaling });
+	uvbufferdata.push_back({ scaling,0.0f });
 	uvbufferdata.push_back({ scaling, scaling });
 	uvbufferdata.push_back({ 0.0f, 0.0f });
 	uvbufferdata.push_back({ scaling,scaling });
-	uvbufferdata.push_back({ scaling,0.0f });
-	boden.setTexture(uvbufferdata, "../src/assets/textures/brick_2.bmp");
+	uvbufferdata.push_back({ 0.0f, scaling });
+	boden.setTexture(uvbufferdata, "../src/assets/textures/diffuse.dds");
 
 	GraphicObject wall = GraphicObject();
 	std::vector< glm::vec3 > vertices01 = std::vector< glm::vec3 >();
-	vertices01.push_back({ 10.0f, -10.0f, -0.8f });
 	vertices01.push_back({ -10.0f, -10.0f, -0.8f });
+	vertices01.push_back({ 10.0f, -10.0f, -0.8f });
 	vertices01.push_back({ 10.0f, 10.0f,   -0.8f});
 	vertices01.push_back({ -10.0f, -10.0f, -0.8f });
 	vertices01.push_back({ 10.0f, 10.0f , -0.8f});
 	vertices01.push_back({ -10.0f, 10.0f , -0.8f});
 	wall.setVertices(vertices01);
-
-	float scaling01 = 5.0f;
-	std::vector< glm::vec2 > uvbufferdata01;
-	uvbufferdata01.push_back({ 0.0f, 0.0f });
-	uvbufferdata01.push_back({ 0.0f, scaling01 });
-	uvbufferdata01.push_back({ scaling01, scaling01 });
-	uvbufferdata01.push_back({ 0.0f,0.0f });
-	uvbufferdata01.push_back({ scaling01,scaling01 });
-	uvbufferdata01.push_back({ scaling01,0.0f });
-	wall.setTexture(uvbufferdata01, "../src/assets/textures/brick_2.bmp");
+	wall.setTexture(uvbufferdata, "../src/assets/textures/brick_2.bmp");
+	GraphicObject wall01 = GraphicObject();
+	std::vector< glm::vec3 > vertices03 = std::vector< glm::vec3 >();
+	vertices03.push_back({ -10.0f, -21.99f, -0.1f });
+	vertices03.push_back({ 10.0f, -21.99f, -0.1f });
+	vertices03.push_back({ 10.0f, 0.01f,   -0.1f});
+	vertices03.push_back({ -10.0f, -21.99f, -0.1f });
+	vertices03.push_back({ 10.0f, 0.01f , -0.1f});
+	vertices03.push_back({ -10.0f, 0.01f , -0.1f});
+	wall01.setVertices(vertices03);
+	wall01.setTexture(uvbufferdata, "../src/assets/textures/brick_2.bmp");
 
 	GraphicObject menu = GraphicObject();
 	std::vector< glm::vec3 > vertices02 = std::vector< glm::vec3 >();
-	vertices02.push_back({ -1.0f, -1.0f, 1.0f });
-	vertices02.push_back({ 1.0f, -1.0f, 1.0f });
-	vertices02.push_back({ 1.0f, 1.0f, 1.0f});
-	vertices02.push_back({ -1.0f, -1.0f, 1.0f });
-	vertices02.push_back({ 1.0f, 1.0f , 1.0f});
-	vertices02.push_back({ -1.0f, 1.0f , 1.0f});
+	vertices02.push_back({ -1.0f, -1.0f, 0.0f });
+	vertices02.push_back({ 1.0f, -1.0f, 0.0f });
+	vertices02.push_back({ 1.0f, 1.0f, 0.0f});
+	vertices02.push_back({ -1.0f, -1.0f, 0.0f });
+	vertices02.push_back({ 1.0f, 1.0f , 0.0f});
+	vertices02.push_back({ -1.0f, 1.0f , 0.0f});
 	menu.setVertices(vertices02);
-
-	float scaling02 = 5.0f;
-	std::vector< glm::vec2 > uvbufferdata02;
-	uvbufferdata02.push_back({ 0.0f, 0.0f });
-	uvbufferdata02.push_back({ scaling,0.0f });
-	uvbufferdata02.push_back({ scaling, scaling });
-	uvbufferdata02.push_back({ 0.0f, 0.0f });
-	uvbufferdata02.push_back({ scaling,scaling });
-	uvbufferdata02.push_back({ 0.0f, scaling });
-	menu.setTexture(uvbufferdata02, "../src/assets/textures/menu.bmp");
-	test_screen.addGraphicObject(menu);
+	
+	menu.setTexture(uvbufferdata, "../src/assets/textures/menu.bmp");
+	// test_screen.addGraphicObject(menu);
 	test_screen.loadShaders();
 
 
@@ -102,6 +95,7 @@ int main( void )
 		   glfwWindowShouldClose(window) == 0 );
 	main_screen.addGraphicObject(boden);
 	main_screen.addGraphicObject(wall);
+	main_screen.addGraphicObject(wall01);
 	do{
 		main_screen.updateAnimationLoop();
 	} 

@@ -20,12 +20,12 @@ using namespace glm;
 struct Screen{
     GLFWwindow* window;
     GLuint programID;
-    GLuint viewMatrixID, modelMatrixID, projectionMatrixID;
+    GLuint viewMatrixID, modelMatrixID, projectionMatrixID, visibilityRadiusID;
     glm::mat4 ViewMatrix;
     glm::mat4 ProjectionMatrix;
 
     glm::vec3 initialPosition;
-    float horizontalAngle, verticalAngle, initialFoV, mouseSensetivity, speed, mouseSpeed;
+    float horizontalAngle, verticalAngle, initialFoV, mouseSensetivity, speed, mouseSpeed, visibilityRadius;
 
     std::vector<GraphicObject> objects;
     // GraphicObject* object;
@@ -41,27 +41,16 @@ struct Screen{
     bool cleanup();
 };
 
-struct Menu_Screen{
+struct MenuScreen{
     GLFWwindow* window;
     GLuint programID;
-    GLuint projectionMatrixID, viewMatrixID, modelMatrixID;
-    glm::mat4 ViewMatrix;
-    glm::mat4 ProjectionMatrix;
-    float FoV;
-    // glm::vec3 initialPosition;
-    // float horizontalAngle, verticalAngle, initialFoV, mouseSensetivity, speed, mouseSpeed;
-
     std::vector<GraphicObject> objects;
-    // GraphicObject* object;
-    Menu_Screen(GLFWwindow*);
-    ~Menu_Screen();
-    glm::mat4 getViewMatrix();
-    glm::mat4 getProjectionMatrix();
-    // void setGraphicObject(GraphicObject*);
+    MenuScreen(GLFWwindow*, std::string);
+    ~MenuScreen();
+    GraphicObject background;
     void addGraphicObject(GraphicObject&);
     void loadShaders();
     void updateAnimationLoop();
-    // void computeMatricesFromInputs();
     bool cleanup();
 };
 

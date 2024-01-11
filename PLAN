@@ -1,0 +1,53 @@
+PLAN
+
+NAME: Dungeon crawler
+
+FEATURES: 
+-- Dungeon:
+  - textured Walls
+  - textured Ceilling
+  - textured Floor
+  - Fog (the further the object is, the darker its is)
+-- Controls:
+  - Walking (Only on the plane)
+  - Moving camera
+-- Menu:
+  - Text
+  - Start Button
+
+IDEAS:  
+-- Player class
+-- Physics?
+-- Dungeons:
+  - Random Dungeon generation
+  - Monster following the player
+  - Collision detecting
+-- Gameplay:
+  - Hand holding torch
+  - Torch produces dynamic light
+-- Installer
+-- Audio
+-- Character:
+  - HEAD_PIECE
+  - BODY_PIECE
+-- Maze
+  - Separate maze class
+  - Create custom coordinate system
+  - create translation of coordinate system into opengl
+  - Generate maze from text file with exit and start
+  - Generate random text file
+
+TODO:
+-- Screen Object that has a reference to the window
+-- WHY I cannot iterate through object<GraphicObject> but through object<GraphicObject&> ?????
+-- SEND Model, View etc Matrices to Shaders and not the whole MVP
+-- Make all void member functions to bool -> it will make the code safer, more checking if the code is working
+-- Clean-up member function for GraphicObject
+-- Clean-up the code
+-- Write the comments
+-- Load Object from file
+-- Abstract the GraphicObject
+-- Create Walls and Floor
+
+IMPLEMENTED:
+-- Do I need GraphicObject: 45 glGenTextures(); -> NOPE

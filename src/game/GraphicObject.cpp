@@ -37,11 +37,25 @@ bool GraphicObject::setVertices(std::vector<glm::vec3> vertices){
     return true;
 }
 
-bool GraphicObject::setTexture(std::vector<glm::vec2> uv_buffer_data, std::string bmpPath){
+bool GraphicObject::setTexture(std::vector<glm::vec2> uv_buffer_data, std::string path){
     hasTexture = true;
-    // glGenTextures(1, &textureID);  
-    textureID = loadBMP_custom(bmpPath.c_str());
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // glGenTextures(1, &textureID);
+    if(path[path.length() - 3] == 'd' && path[path.length() - 2] == 'd' && path[path.length() - 1] == 's'){
+        textureID = loadDDS(path.c_str());
+    }
+    if(path[path.length() - 3] == 'b' && path[path.length() - 2] == 'm' && path[path.length() - 1] == 'p'){
+        textureID = loadBMP_custom(path.c_str());
+    }
+   	// glPixelStorei(GL_UNPACK_ALIGNMENT,1);	
+
+    // textureID = loadBMP_custom(path.c_str());
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); 
+	glGenerateMipmap(GL_TEXTURE_2D);
+
 
     glGenBuffers(1, &uvBufferID);
     glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);

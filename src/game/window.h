@@ -16,3 +16,5 @@ using namespace glm;
 
 GLFWwindow*  initializeWindow(int width, int height, const char * screen_title);
 GLuint loadBMP_custom(const char * imagepath);
+GLuint loadTGA_glfw(const char *);
+GLuint loadDDS(const char *);

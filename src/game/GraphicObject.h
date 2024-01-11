@@ -22,7 +22,7 @@ struct GraphicObject
 
     bool initializeVAO();
     bool setVertices(std::vector< glm::vec3 >);
-    bool setTexture(std::vector< glm::vec2 >, std::string bmpPath);
+    bool setTexture(std::vector< glm::vec2 >, std::string);
     void draw();
     void cleanup();
 };
