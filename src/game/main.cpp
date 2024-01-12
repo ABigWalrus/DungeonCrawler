@@ -27,7 +27,7 @@ int main( void )
 	if(!window) return -1;
 	Menu test_screen{window, "../src/assets/textures/menu.bmp"};
 
-	Screen main_screen{window};
+	Game main_screen{window};
 	
 	GraphicObject boden = GraphicObject();
 	std::vector< glm::vec3 > vertices = std::vector< glm::vec3 >();
@@ -82,7 +82,7 @@ int main( void )
 	
 	menu.setTexture(uvbufferdata, "../src/assets/textures/menu.bmp");
 	// test_screen.addGraphicObject(menu);	
-	main_screen.loadShaders();
+	// main_screen.loadShaders();
 
 	do{
 		test_screen.updateAnimationLoop();
