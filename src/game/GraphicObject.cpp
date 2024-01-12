@@ -16,7 +16,7 @@
 
 
 
-GraphicObject::GraphicObject(): hasTexture(false), M(glm::mat4(1.0f)){}
+GraphicObject::GraphicObject():vertexArrayID(-1), hasTexture(false), M(glm::mat4(1.0f)){}
 
 GraphicObject::~GraphicObject(){}
 

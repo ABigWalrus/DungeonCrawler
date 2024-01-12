@@ -25,7 +25,7 @@ int main( void )
 {	
 	window = initializeWindow(1024, 768, "Dungeon Crawler");
 	if(!window) return -1;
-	MenuScreen test_screen{window, "../src/assets/textures/menu.bmp"};
+	Menu test_screen{window, "../src/assets/textures/menu.bmp"};
 
 	Screen main_screen{window};
 	
@@ -81,11 +81,7 @@ int main( void )
 	menu.setVertices(vertices02);
 	
 	menu.setTexture(uvbufferdata, "../src/assets/textures/menu.bmp");
-	// test_screen.addGraphicObject(menu);
-	test_screen.loadShaders();
-
-
-	
+	// test_screen.addGraphicObject(menu);	
 	main_screen.loadShaders();
 
 	do{

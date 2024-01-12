@@ -244,3 +244,60 @@ bool MenuScreen::cleanup()
 	glDeleteProgram(programID);
 	return true;
 }
+
+OpenGLScreen::OpenGLScreen(GLFWwindow* _window):window(_window){}
+OpenGLScreen::~OpenGLScreen(){}
+void OpenGLScreen::addGraphicObject(GraphicObject& object){
+	objects.push_back(object);
+}
+
+Menu::Menu(GLFWwindow* _window, std::string background_texture):OpenGLScreen(_window){
+	programID = -1;
+    glfwSetInputMode(OpenGLScreen::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	background = GraphicObject();
+	
+	std::vector< glm::vec3 > vertices = std::vector< glm::vec3 >();
+	vertices.push_back({ -1.0f, -1.0f, 0.0f });
+	vertices.push_back({ 1.0f, -1.0f, 0.0f });
+	vertices.push_back({ 1.0f, 1.0f, 0.0f});
+	vertices.push_back({ -1.0f, -1.0f, 0.0f });
+	vertices.push_back({ 1.0f, 1.0f , 0.0f});
+	vertices.push_back({ -1.0f, 1.0f , 0.0f});
+	std::vector< glm::vec2 > uvbufferdata;
+	uvbufferdata.push_back({ 0.0f, 0.0f });
+	uvbufferdata.push_back({ 1.0f, 0.0f });
+	uvbufferdata.push_back({ 1.0f, 1.0f });
+	uvbufferdata.push_back({ 0.0f, 0.0f });
+	uvbufferdata.push_back({ 1.0f,1.0f });
+	uvbufferdata.push_back({ 0.0f, 1.0f });
+	background.setVertices(vertices);
+	background.setTexture(uvbufferdata, background_texture);
+	addGraphicObject(background);
+
+	programID = LoadShaders("../src/assets/shaders/DefaultVertex.glsl", "../src/assets/shaders/DefaultFragment.glsl");
+
+}
+
+Menu::~Menu(){}
+
+void Menu::updateAnimationLoop(){
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	// Use our shader
+	glUseProgram(programID);
+    // background.draw();
+    for(auto obj:objects){
+		
+        obj.draw();
+    }
+
+	glfwSwapBuffers(window);
+	glfwPollEvents();
+}
+
+void Menu::cleanup(){
+	// background.cleanup();
+	for(auto obj:objects){
+		obj.cleanup();
+	}
+	glDeleteProgram(programID);
+}

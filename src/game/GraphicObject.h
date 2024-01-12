@@ -10,9 +10,7 @@
 
 struct GraphicObject
 {
-    GLuint vertexArrayID = -1;
-    GLuint vertexBufferID, vertextBufferSize;
-    GLuint uvBufferID;
+    GLuint vertexArrayID, vertexBufferID, vertextBufferSize, uvBufferID;
     GLuint textureID, textureSamplerID;
     bool hasTexture;
     glm::mat4 M;
