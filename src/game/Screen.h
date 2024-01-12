@@ -17,43 +17,6 @@
 #include <glm/glm.hpp>
 using namespace glm;
 
-struct Screen{
-    GLFWwindow* window;
-    GLuint programID;
-    GLuint viewMatrixID, modelMatrixID, projectionMatrixID, visibilityRadiusID;
-    glm::mat4 ViewMatrix;
-    glm::mat4 ProjectionMatrix;
-
-    glm::vec3 initialPosition;
-    float horizontalAngle, verticalAngle, initialFoV, mouseSensetivity, speed, mouseSpeed, visibilityRadius;
-
-    std::vector<GraphicObject> objects;
-    // GraphicObject* object;
-    Screen(GLFWwindow*);
-    ~Screen();
-    glm::mat4 getViewMatrix();
-    glm::mat4 getProjectionMatrix();
-    // void setGraphicObject(GraphicObject*);
-    void addGraphicObject(GraphicObject&);
-    void loadShaders();
-    void updateAnimationLoop();
-    void computeMatricesFromInputs();
-    bool cleanup();
-};
-
-struct MenuScreen{
-    GLFWwindow* window;
-    GLuint programID;
-    GraphicObject background;
-    std::vector<GraphicObject> objects;
-    MenuScreen(GLFWwindow*, std::string);
-    ~MenuScreen();
-    void addGraphicObject(GraphicObject&);
-    void loadShaders();
-    void updateAnimationLoop();
-    bool cleanup();
-};
-
 class OpenGLScreen{
     public:
         // OpenGLScreen(GLFWwindow*);
@@ -62,6 +25,7 @@ class OpenGLScreen{
         virtual void addGraphicObject(GraphicObject&) = 0;
         virtual void updateAnimationLoop() = 0;
         virtual void cleanup() = 0;
+        virtual void computeMatricesFromInputs() = 0;
 };
 
 class Menu:public OpenGLScreen{
@@ -78,6 +42,8 @@ class Menu:public OpenGLScreen{
         void addGraphicObject(GraphicObject&) override;
         void updateAnimationLoop() override;
         void cleanup() override;
+        void computeMatricesFromInputs() override;
+
 };
 
 class Game:public OpenGLScreen{
@@ -98,8 +64,7 @@ class Game:public OpenGLScreen{
         void addGraphicObject(GraphicObject&) override;
         void updateAnimationLoop() override;
         void cleanup() override;
-
-        void computeMatricesFromInputs();
+        void computeMatricesFromInputs() override;
 
         glm::mat4 getViewMatrix();
         glm::mat4 getProjectionMatrix();
