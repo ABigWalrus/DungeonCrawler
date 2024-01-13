@@ -1,5 +1,6 @@
 #include "GraphicObject.h"
 #include "Screen.h"
+#include "window.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -17,10 +18,11 @@
 #include <common/shader.hpp>
 
 
-Menu::Menu(GLFWwindow* _window, std::string background_texture,int _width, int _height):
+Menu::Menu(GLFWwindow* _window, std::string background_texture):
 	window(_window), 
-	width(_width), 
-	height(_height)
+	width(1024), 
+	height(768),
+	status(OPEN)
 	{
 	// programID = -1;
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -54,6 +56,7 @@ void Menu::updateAnimationLoop(){
 	// Use our shader
 	glUseProgram(programID);
     // background.draw();
+	computeMatricesFromInputs();
     for(auto obj:objects){
 		
         obj.draw();
@@ -74,12 +77,29 @@ void Menu::cleanup(){
 	}
 	glDeleteProgram(programID);
 }
-void Menu::computeMatricesFromInputs(){}
+void Menu::computeMatricesFromInputs(){
+	switch(status){
+		case OPEN:
+			if(glfwGetKey( window, GLFW_KEY_ESCAPE ) == GLFW_PRESS){
+				std::cout << "Changing status from OPEN to PROCESSING\n";
+        		status = PROCESSING;
+			}
+			break;
+		case PROCESSING:
+			if(glfwGetKey( window, GLFW_KEY_ESCAPE ) != GLFW_PRESS){
+				std::cout << "Changing status from OPEN to PROCESSING\n";
+				status = CLOSED;
+			}
+			break;
+	}
+	
+}
 
-Game::Game(GLFWwindow* _window, int _width, int _height):
+Game::Game(GLFWwindow* _window):
 	window(_window),
-	width(_width),
-	height(_height)
+	width(1024),
+	height(768),
+	status(OPEN)
 	{
 	initialPosition = glm::vec3( 0, 0, 5 );
     horizontalAngle = 3.14f;
@@ -215,7 +235,20 @@ void Game::computeMatricesFromInputs(){
 								initialPosition+direction, // and looks here : at the same initialPosition, plus "direction"
 								up                  // Head is up (set to 0,-1,0 to look upside-down)
 						   );
-
+	switch(status){
+		case OPEN:
+			if(glfwGetKey( window, GLFW_KEY_ESCAPE ) == GLFW_PRESS){
+				std::cout << "Changing status from OPEN to PROCESSING\n";
+        		status = PROCESSING;
+			}
+			break;
+		case PROCESSING:
+			if(glfwGetKey( window, GLFW_KEY_ESCAPE ) != GLFW_PRESS){
+				std::cout << "Changing status from OPEN to PROCESSING\n";
+				status = CLOSED;
+			}
+			break;
+	}
 	// For the next frame, the "last time" will be "now"
 	lastTime = currentTime;
 }
@@ -229,4 +262,9 @@ void Game::cleanup(){
 		obj.cleanup();
 	}
 	glDeleteProgram(programID);
+}
+
+void Game::addPlane(Plane& plane){
+	planes.push_back(plane);
+	objects.push_back(plane.getSkin());
 }

@@ -18,6 +18,9 @@ using namespace glm;
 #define FOURCC_DXT3 0x33545844 // Equivalent to "DXT3" in ASCII
 #define FOURCC_DXT5 0x35545844 // Equivalent to "DXT5" in ASCII
 
+#define WINDOW_HEIGHT 768;
+#define WINDOW_WIDTH 1024;
+
 GLFWwindow* initializeWindow(int width, int height, const char * screen_title){
 	// GLFWwindow* window;
 	if( !glfwInit() )

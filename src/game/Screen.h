@@ -17,6 +17,11 @@
 #include <glm/glm.hpp>
 using namespace glm;
 
+enum SCREEN_STATUS{
+    OPEN,
+    CLOSED,
+    PROCESSING
+};
 class OpenGLScreen{
     public:
         // OpenGLScreen(GLFWwindow*);
@@ -36,9 +41,11 @@ class Menu:public OpenGLScreen{
         GLuint programID;
         std::vector<GraphicObject> objects;
         GraphicObject background;
-
+        
     public:
-        Menu(GLFWwindow* window, std::string background_texture, int width, int height);
+        SCREEN_STATUS status;
+        
+        Menu(GLFWwindow* window, std::string background_texture);
         virtual ~Menu();
 
         void addGraphicObject(GraphicObject&) override;
@@ -53,6 +60,7 @@ class Game:public OpenGLScreen{
         GLFWwindow* window;
         int height, width;
         std::vector<GraphicObject> objects;
+        std::vector<Plane> planes;
 
         GLuint programID, viewMatrixID, modelMatrixID, projectionMatrixID, visibilityRadiusID;
         
@@ -60,8 +68,11 @@ class Game:public OpenGLScreen{
         float horizontalAngle, verticalAngle, initialFoV, mouseSensetivity, speed, mouseSpeed, visibilityRadius;
         glm::mat4 ViewMatrix;
         glm::mat4 ProjectionMatrix;
+
     public:
-        Game(GLFWwindow* window, int width, int height);
+        SCREEN_STATUS status;
+
+        Game(GLFWwindow* window);
         virtual ~Game();
 
         void addGraphicObject(GraphicObject&) override;
@@ -71,4 +82,5 @@ class Game:public OpenGLScreen{
 
         glm::mat4 getViewMatrix();
         glm::mat4 getProjectionMatrix();
+        void addPlane(Plane&);
 };
