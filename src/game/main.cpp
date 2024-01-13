@@ -41,7 +41,7 @@ int main( void )
 		{10000, -768, -15000},
 		{10000, -768, 15000},
 		{-10000, -768, 15000});
-	main_screen.addPlane(plane1);
+	main_screen.addGraphicObject(plane1);
 	do{
 		main_screen.updateAnimationLoop();
 	} 

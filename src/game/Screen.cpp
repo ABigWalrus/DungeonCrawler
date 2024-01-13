@@ -264,7 +264,7 @@ void Game::cleanup(){
 	glDeleteProgram(programID);
 }
 
-void Game::addPlane(Plane& plane){
-	planes.push_back(plane);
-	objects.push_back(plane.getSkin());
-}
+// void Game::addPlane(Plane& plane){
+// 	// planes.push_back(plane);
+// 	objects.push_back(plane);
+// }

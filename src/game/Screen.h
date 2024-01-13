@@ -44,7 +44,7 @@ class Menu:public OpenGLScreen{
         
     public:
         SCREEN_STATUS status;
-        
+
         Menu(GLFWwindow* window, std::string background_texture);
         virtual ~Menu();
 
@@ -60,7 +60,7 @@ class Game:public OpenGLScreen{
         GLFWwindow* window;
         int height, width;
         std::vector<GraphicObject> objects;
-        std::vector<Plane> planes;
+        // std::vector<Plane> planes;
 
         GLuint programID, viewMatrixID, modelMatrixID, projectionMatrixID, visibilityRadiusID;
         
@@ -82,5 +82,5 @@ class Game:public OpenGLScreen{
 
         glm::mat4 getViewMatrix();
         glm::mat4 getProjectionMatrix();
-        void addPlane(Plane&);
+        // void addPlane(Plane&);
 };

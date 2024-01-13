@@ -128,7 +128,7 @@ Plane::Plane(glm::vec3 _p1, glm::vec3 _p2, glm::vec3 _p3, glm::vec3 _p4):
 	// uvbufferdata.push_back({ scaling,scaling });
 	// uvbufferdata.push_back({ 0.0f, scaling });
 	// skin.setTexture(uvbufferdata, "../src/assets/textures/diffuse.dds");
-    skin = GraphicObject();
+    // skin = GraphicObject();
 	// std::vector< glm::vec3 > vertices = std::vector< glm::vec3 >();
 	// vertices.push_back({ -10.0f, -0.8f, -10.0f });
 	// vertices.push_back({ 10.0f, -0.8f, -10.0f });
@@ -136,8 +136,8 @@ Plane::Plane(glm::vec3 _p1, glm::vec3 _p2, glm::vec3 _p3, glm::vec3 _p4):
 	// vertices.push_back({ -10.0f, -0.8f, -10.0f });
 	// vertices.push_back({ 10.0f,  -0.8f, 10.0f });
 	// vertices.push_back({ -10.0f, -0.8f, 10.0f });
-	skin.setVertices(vertices);
-
+	// skin.setVertices(vertices);
+    setVertices(vertices);
 	float scaling = 10.0f;
 	std::vector< glm::vec2 > uvbufferdata;
 	uvbufferdata.push_back({ 0.0f, 0.0f });
@@ -146,9 +146,10 @@ Plane::Plane(glm::vec3 _p1, glm::vec3 _p2, glm::vec3 _p3, glm::vec3 _p4):
 	uvbufferdata.push_back({ 0.0f, 0.0f });
 	uvbufferdata.push_back({ scaling,scaling });
 	uvbufferdata.push_back({ 0.0f, scaling });
-	skin.setTexture(uvbufferdata, "../src/assets/textures/diffuse.dds");
+	// skin.setTexture(uvbufferdata, "../src/assets/textures/diffuse.dds");
+    setTexture(uvbufferdata, "../src/assets/textures/diffuse.dds");
 }
 
 Plane::~Plane(){}
 
-GraphicObject& Plane::getSkin(){return skin;}
+// GraphicObject& Plane::getSkin(){return skin;}

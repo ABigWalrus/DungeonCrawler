@@ -16,7 +16,7 @@ class GraphicObject{
         bool hasTexture;
         glm::mat4 M;
         GraphicObject();
-        ~GraphicObject();
+        virtual ~GraphicObject();
 
         bool initializeVAO();
         bool setVertices(std::vector< glm::vec3 >);
@@ -25,12 +25,12 @@ class GraphicObject{
         void cleanup();
 };
 
-class Plane{
+class Plane:public GraphicObject{
     private:
-        GraphicObject skin;
+        // GraphicObject skin;
         glm::vec3 p1, p2, p3, p4;
     public:
         Plane(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, glm::vec3 p4);
         ~Plane();
-        GraphicObject& getSkin();
+        // GraphicObject& getSkin();
 };
