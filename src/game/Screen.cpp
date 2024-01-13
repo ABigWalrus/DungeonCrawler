@@ -55,7 +55,6 @@ void Menu::updateAnimationLoop(){
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// Use our shader
 	glUseProgram(programID);
-    // background.draw();
 	computeMatricesFromInputs();
     for(auto obj:objects){
 		
@@ -71,7 +70,6 @@ void Menu::addGraphicObject(GraphicObject& object){
 }
 
 void Menu::cleanup(){
-	// background.cleanup();
 	for(auto obj:objects){
 		obj.cleanup();
 	}
@@ -132,7 +130,6 @@ void Game::updateAnimationLoop(){
 	glm::mat4 ProjectionMatrix = getProjectionMatrix();
 	glm::mat4 ViewMatrix = getViewMatrix();
     for(auto obj:objects){
-        //glm::mat4 MVP = ProjectionMatrix * ViewMatrix * obj.M;
 
         // Send our transformation to the currently bound shader, 
         // in the "MVP" uniform
@@ -143,19 +140,6 @@ void Game::updateAnimationLoop(){
 
         obj.draw();
     }
-	// glm::mat4 MVP = ProjectionMatrix * ViewMatrix * object->M;
-
-	// // Send our transformation to the currently bound shader, 
-	// // in the "MVP" uniform
-	// glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
-	// glUniformMatrix4fv(modelMatrixID, 1, GL_FALSE, &object->M[0][0]);
-	// glUniformMatrix4fv(viewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
-
-
-	// object->draw();
-	
-
-	// Swap buffers
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 
@@ -263,8 +247,3 @@ void Game::cleanup(){
 	}
 	glDeleteProgram(programID);
 }
-
-// void Game::addPlane(Plane& plane){
-// 	// planes.push_back(plane);
-// 	objects.push_back(plane);
-// }
