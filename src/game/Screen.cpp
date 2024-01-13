@@ -17,11 +17,14 @@
 #include <common/shader.hpp>
 
 
-Menu::Menu(GLFWwindow* _window, std::string background_texture):window(_window){
+Menu::Menu(GLFWwindow* _window, std::string background_texture,int _width, int _height):
+	window(_window), 
+	width(_width), 
+	height(_height)
+	{
 	// programID = -1;
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	background = GraphicObject();
-	
 	std::vector< glm::vec3 > vertices = std::vector< glm::vec3 >();
 	vertices.push_back({ -1.0f, -1.0f, 0.0f });
 	vertices.push_back({ 1.0f, -1.0f, 0.0f });
@@ -73,7 +76,11 @@ void Menu::cleanup(){
 }
 void Menu::computeMatricesFromInputs(){}
 
-Game::Game(GLFWwindow* _window):window(_window){
+Game::Game(GLFWwindow* _window, int _width, int _height):
+	window(_window),
+	width(_width),
+	height(_height)
+	{
 	initialPosition = glm::vec3( 0, 0, 5 );
     horizontalAngle = 3.14f;
     verticalAngle = 0.0f;

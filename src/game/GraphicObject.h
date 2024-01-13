@@ -8,19 +8,23 @@
 
 #include <glm/glm.hpp>
 
-struct GraphicObject
-{
-    GLuint vertexArrayID, vertexBufferID, vertextBufferSize, uvBufferID;
-    GLuint textureID, textureSamplerID;
-    bool hasTexture;
-    glm::mat4 M;
+class GraphicObject{
+    private:
+        GLuint vertexArrayID, vertexBufferID, vertextBufferSize, uvBufferID;
+        GLuint textureID, textureSamplerID;
+        bool hasTexture;
+        glm::mat4 M;
+    public:
+        GraphicObject();
+        virtual ~GraphicObject();
 
-    GraphicObject();
-    ~GraphicObject();
+        bool initializeVAO();
+        bool setVertices(std::vector< glm::vec3 >);
+        bool setTexture(std::vector< glm::vec2 >, std::string);
+        void draw();
+        void cleanup();
+};
 
-    bool initializeVAO();
-    bool setVertices(std::vector< glm::vec3 >);
-    bool setTexture(std::vector< glm::vec2 >, std::string);
-    void draw();
-    void cleanup();
+class Plane:public GraphicObject{
+    
 };

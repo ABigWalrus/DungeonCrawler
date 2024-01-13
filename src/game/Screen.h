@@ -31,12 +31,14 @@ class OpenGLScreen{
 class Menu:public OpenGLScreen{
     private:
         GLFWwindow* window;
+        int height, width;
+
         GLuint programID;
         std::vector<GraphicObject> objects;
         GraphicObject background;
 
     public:
-        Menu(GLFWwindow*, std::string);
+        Menu(GLFWwindow* window, std::string background_texture, int width, int height);
         virtual ~Menu();
 
         void addGraphicObject(GraphicObject&) override;
@@ -49,6 +51,7 @@ class Menu:public OpenGLScreen{
 class Game:public OpenGLScreen{
     private:
         GLFWwindow* window;
+        int height, width;
         std::vector<GraphicObject> objects;
 
         GLuint programID, viewMatrixID, modelMatrixID, projectionMatrixID, visibilityRadiusID;
@@ -58,7 +61,7 @@ class Game:public OpenGLScreen{
         glm::mat4 ViewMatrix;
         glm::mat4 ProjectionMatrix;
     public:
-        Game(GLFWwindow*);
+        Game(GLFWwindow* window, int width, int height);
         virtual ~Game();
 
         void addGraphicObject(GraphicObject&) override;

@@ -23,9 +23,11 @@ GLFWwindow* window;
 
 int main( void )
 {	
-	window = initializeWindow(1024, 768, "Dungeon Crawler");
+	int HEIGHT = 768;
+	int WIDTH = 1024;
+	window = initializeWindow(WIDTH, HEIGHT, "Dungeon Crawler");
 	if(!window) return -1;
-	Menu test_screen{window, "../src/assets/textures/menu.bmp"};
+	Menu test_screen{window, "../src/assets/textures/menu.bmp", WIDTH, HEIGHT};
 	
 	GraphicObject boden = GraphicObject();
 	std::vector< glm::vec3 > vertices = std::vector< glm::vec3 >();
@@ -87,7 +89,7 @@ int main( void )
 	} 
 	while( glfwGetKey(window, GLFW_KEY_P ) != GLFW_PRESS &&
 		   glfwWindowShouldClose(window) == 0 );
-	Game main_screen{window};
+	Game main_screen{window, WIDTH, HEIGHT};
 	main_screen.addGraphicObject(boden);
 	main_screen.addGraphicObject(wall);
 	main_screen.addGraphicObject(wall01);
