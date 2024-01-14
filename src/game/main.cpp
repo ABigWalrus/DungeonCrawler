@@ -40,6 +40,8 @@ int main( void )
 	Wall wall2({-0.5, 2}, {-0.5, 4});
 	Wall wall3({0.5, 0}, {0.5, 2});
 	Wall wall4({0.5, 2}, {0.5, 4});
+	Wall wall5({-0.5, -2}, {-0.5, 0});
+	Wall wall6({-0.5, -2}, {1.5, -2});
 	// Wall wall3({1, 0}, {2, 0});
 	// Wall wall4({2, 0}, {3, 0});
 	// Wall wall5({3, 0}, {4, 0});
@@ -55,8 +57,8 @@ int main( void )
 	game_screen.addGraphicObject(wall2);
 	game_screen.addGraphicObject(wall3);
 	game_screen.addGraphicObject(wall4);
-	// game_screen.addGraphicObject(wall5);
-	// game_screen.addGraphicObject(wall6);
+	game_screen.addGraphicObject(wall5);
+	game_screen.addGraphicObject(wall6);
 	// game_screen.addGraphicObject(wall7);
 	// game_screen.addGraphicObject(wall8);
 	// game_screen.addGraphicObject(wall9);
