@@ -90,7 +90,7 @@ Plane::Plane(glm::vec3 _p1, glm::vec3 _p2, glm::vec3 _p3, glm::vec3 _p4, float s
     p3(_p3), 
     p4(_p4)
     {
-    float WINDOW_PROPORTIONS = 4.0f/3.0f;
+    float WINDOW_PROPORTIONS = 16.0f/9.0f;
     std::vector< glm::vec3 > vertices = std::vector< glm::vec3 >();
 	vertices.push_back({ p1.x * WINDOW_PROPORTIONS, p1.y, p1.z * WINDOW_PROPORTIONS});
 	vertices.push_back({ p2.x * WINDOW_PROPORTIONS, p2.y, p2.z * WINDOW_PROPORTIONS});
@@ -128,8 +128,8 @@ Wall::Wall(glm::vec2 _p1, glm::vec2 _p2):
     Plane(
         {_p1.x, -1, _p1.y},
         {_p2.x, -1, _p2.y},
-        {_p2.x, 0, _p2.y},
-        {_p1.x, 0, _p1.y},
+        {_p2.x, 1, _p2.y},
+        {_p1.x, 1, _p1.y},
         1.0f),
     p1(_p1),
     p2(_p2){}

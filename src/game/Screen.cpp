@@ -25,7 +25,6 @@ Menu::Menu(GLFWwindow* _window, std::string background_texture):
 	status(OPEN)
 	{
 	// programID = -1;
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	background = GraphicObject();
 	std::vector< glm::vec3 > vertices = std::vector< glm::vec3 >();
 	vertices.push_back({ -1.0f, -1.0f, 0.0f });
@@ -52,6 +51,7 @@ Menu::Menu(GLFWwindow* _window, std::string background_texture):
 Menu::~Menu(){}
 
 void Menu::updateAnimationLoop(){
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// Use our shader
 	glUseProgram(programID);
@@ -114,14 +114,14 @@ Game::Game(GLFWwindow* _window):
 	modelMatrixID = glGetUniformLocation(programID, "M");
 	modelMatrixID = glGetUniformLocation(programID, "M");
 	visibilityRadiusID = glGetUniformLocation(programID, "visibilityRadius");
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	
 }
 Game::~Game(){}
 glm::mat4 Game::getViewMatrix(){return ViewMatrix;}
 glm::mat4 Game::getProjectionMatrix(){return ProjectionMatrix;}
 
 void Game::updateAnimationLoop(){
-	
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Use our shader

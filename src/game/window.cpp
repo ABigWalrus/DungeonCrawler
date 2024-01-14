@@ -18,8 +18,6 @@ using namespace glm;
 #define FOURCC_DXT3 0x33545844 // Equivalent to "DXT3" in ASCII
 #define FOURCC_DXT5 0x35545844 // Equivalent to "DXT5" in ASCII
 
-#define WINDOW_HEIGHT 768;
-#define WINDOW_WIDTH 1024;
 
 GLFWwindow* initializeWindow(int width, int height, const char * screen_title){
 	// GLFWwindow* window;
@@ -38,7 +36,7 @@ GLFWwindow* initializeWindow(int width, int height, const char * screen_title){
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Open a window and create its OpenGL context
-	GLFWwindow* window = glfwCreateWindow(width, height, screen_title, NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(width, height, screen_title,  glfwGetPrimaryMonitor(), NULL);
 	if( window == NULL ){
 		fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
 		getchar();
