@@ -6,6 +6,7 @@ layout(location = 1) in vec2 vertexUV;
 
 out vec2 UV;
 out float visibility;
+// out vec4 gl_FragCoord;
 
 uniform mat4 P;
 uniform mat4 V;
@@ -15,6 +16,7 @@ uniform float visibilityRadius;
 void main(){
     mat4 MVP = P * V * M;
     gl_Position = MVP * vec4(vertexPosition_modelspace, 1);
+    // gl_FragCoord = gl_Position;
     // if((gl_Position.x*vertexPosition_modelspace.x) + (gl_Position.z) * (gl_Position.z) < (visibilityRadius * visibilityRadius * visibilityRadius)){
     //     visibility = 1;
     // }else{

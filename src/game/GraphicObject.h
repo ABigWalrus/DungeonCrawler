@@ -29,6 +29,22 @@ class Plane:public GraphicObject{
     private:
         glm::vec3 p1, p2, p3, p4;
     public:
-        Plane(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, glm::vec3 p4);
-        ~Plane();
+        Plane(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, glm::vec3 p4, float texture_scaling);
+        virtual ~Plane();
+};
+
+class Floor:public Plane{
+    private:
+        glm::vec2 p1, p2;
+    public:
+        Floor(glm::vec2 p1, glm::vec2 p2);
+        ~Floor();
+};
+
+class Wall:public Plane{
+    private:
+        glm::vec2 p1, p2;
+    public:
+        Wall(glm::vec2 p1, glm::vec2 p2);
+        ~Wall();
 };
