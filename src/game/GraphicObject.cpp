@@ -125,13 +125,26 @@ Floor::Floor(glm::vec2 _p1, glm::vec2 _p2):
 Floor::~Floor(){}
 
 Wall::Wall(glm::vec2 _p1, glm::vec2 _p2):
-    Plane(
-        {_p1.x, -1, _p1.y},
-        {_p2.x, -1, _p2.y},
-        {_p2.x, 1, _p2.y},
-        {_p1.x, 1, _p1.y},
-        1.0f),
     p1(_p1),
-    p2(_p2){}
+    p2(_p2){
+        float WINDOW_PROPORTIONS = 16.0f/9.0f;
+        std::vector< glm::vec3 > vertices = std::vector< glm::vec3 >();
+	    vertices.push_back({ p1.x * WINDOW_PROPORTIONS, -1, p1.y * WINDOW_PROPORTIONS});
+	    vertices.push_back({ p2.x * WINDOW_PROPORTIONS, -1, p2.y * WINDOW_PROPORTIONS});
+	    vertices.push_back({ p2.x * WINDOW_PROPORTIONS, 1, p2.y * WINDOW_PROPORTIONS});
+        vertices.push_back({ p1.x * WINDOW_PROPORTIONS, -1, p1.y * WINDOW_PROPORTIONS});
+	    vertices.push_back({ p2.x * WINDOW_PROPORTIONS, 1, p2.y * WINDOW_PROPORTIONS});
+	    vertices.push_back({ p1.x * WINDOW_PROPORTIONS, 1, p1.y * WINDOW_PROPORTIONS});
+        setVertices(vertices);
+        float scaling = 1.0f;
+        	std::vector< glm::vec2 > uvbufferdata;
+        uvbufferdata.push_back({ 0.0f, 0.0f });
+        uvbufferdata.push_back({ scaling,0.0f });
+        uvbufferdata.push_back({ scaling, scaling });
+        uvbufferdata.push_back({ 0.0f, 0.0f });
+        uvbufferdata.push_back({ scaling,scaling });
+        uvbufferdata.push_back({ 0.0f, scaling });
+        setTexture(uvbufferdata, "../src/assets/textures/diffuse.dds");
+    }
 
 Wall::~Wall(){}

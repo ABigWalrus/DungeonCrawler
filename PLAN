@@ -36,6 +36,9 @@ IDEAS:
   - create translation of coordinate system into opengl
   - Generate maze from text file with exit and start
   - Generate random text file
+-- Enemies
+  - Some enemies could be shot
+  - But main follower is immortal
 
 TODO:
 -- Screen Object that has a reference to the window

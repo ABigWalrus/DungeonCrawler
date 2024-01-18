@@ -61,10 +61,11 @@ class Game:public OpenGLScreen{
         int height, width;
         std::vector<GraphicObject> objects;
 
-        GLuint programID, viewMatrixID, modelMatrixID, projectionMatrixID, visibilityRadiusID;
-        
-        glm::vec3 initialPosition;
-        float horizontalAngle, verticalAngle, initialFoV, mouseSensetivity, speed, mouseSpeed, visibilityRadius;
+        GLuint programID, viewMatrixID, modelMatrixID, projectionMatrixID, torchID, timeID;
+        int torch;
+        float time;
+        glm::vec3 PlayerPosition;
+        float horizontalAngle, verticalAngle, initialFoV, mouseSensetivity, speed, mouseSpeed;
         glm::mat4 ViewMatrix;
         glm::mat4 ProjectionMatrix;
 

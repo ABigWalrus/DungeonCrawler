@@ -99,22 +99,22 @@ Game::Game(GLFWwindow* _window):
 	height(768),
 	status(OPEN)
 	{
-	initialPosition = glm::vec3( 0, 0, 5 );
+	PlayerPosition = glm::vec3( 0, 0, 0 );
     horizontalAngle = 3.14f;
     verticalAngle = 0.0f;
     initialFoV = 45.0f;
     mouseSensetivity = 0.3f;
     speed = 1.0f;
     mouseSpeed = 0.005f;
-	visibilityRadius = 20.0f;
-
+	torch = 0;
+	time = 0;
 	programID = LoadShaders("../src/assets/shaders/VertexShader.glsl", "../src/assets/shaders/FragmentShader.glsl");
     projectionMatrixID = glGetUniformLocation(programID, "P");
 	viewMatrixID = glGetUniformLocation(programID, "V");
 	modelMatrixID = glGetUniformLocation(programID, "M");
 	modelMatrixID = glGetUniformLocation(programID, "M");
-	visibilityRadiusID = glGetUniformLocation(programID, "visibilityRadius");
-	
+	torchID = glGetUniformLocation(programID, "torch");
+	timeID = glGetUniformLocation(programID, "mytime");
 }
 Game::~Game(){}
 glm::mat4 Game::getViewMatrix(){return ViewMatrix;}
@@ -136,7 +136,8 @@ void Game::updateAnimationLoop(){
         glUniformMatrix4fv(projectionMatrixID, 1, GL_FALSE, &ProjectionMatrix[0][0]);
         glUniformMatrix4fv(modelMatrixID, 1, GL_FALSE, &obj.M[0][0]);
         glUniformMatrix4fv(viewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
-		glUniform1f(visibilityRadiusID, visibilityRadius);
+		glUniform1i(torchID, torch);
+		glUniform1f(timeID, time);
 
         obj.draw();
     }
@@ -153,12 +154,12 @@ void Game::computeMatricesFromInputs(){
 	// Compute time difference between current and last frame
 	double currentTime = glfwGetTime();
 	float deltaTime = float(currentTime - lastTime);
-
-	// Get mouse initialPosition
+	time = currentTime;
+	// Get mouse PlayerPosition
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
 
-	// Reset mouse initialPosition for next frame
+	// Reset mouse PlayerPosition for next frame
 	glfwSetCursorPos(window, 1024/2, 768/2);
 
 	// Compute new orientation
@@ -193,30 +194,44 @@ void Game::computeMatricesFromInputs(){
 	}
 	// Move forward
 	if (glfwGetKey( window, GLFW_KEY_W ) == GLFW_PRESS){
-		initialPosition += front * deltaTime * speed;
+		PlayerPosition += front * deltaTime * speed;
 
 	}
 	// Move backward
 	if (glfwGetKey( window, GLFW_KEY_S ) == GLFW_PRESS){
-		initialPosition -= front * deltaTime * speed;
+		PlayerPosition -= front * deltaTime * speed;
 	}
 	// Strafe right
 	if (glfwGetKey( window, GLFW_KEY_D ) == GLFW_PRESS){
-		initialPosition += right * deltaTime * speed;
+		PlayerPosition += right * deltaTime * speed;
 	}
 	// Strafe left
 	if (glfwGetKey( window, GLFW_KEY_A ) == GLFW_PRESS){
-		initialPosition -= right * deltaTime * speed;
+		PlayerPosition -= right * deltaTime * speed;
 	}
-    
+    if (glfwGetKey( window, GLFW_KEY_E ) == GLFW_PRESS){
+		if(torch == 0){
+			torch = 2;
+		}
+		if(torch == 1){
+			torch = 3;
+		}
+	}else{
+		if(torch == 2){
+			torch = 1;
+		}
+		if(torch == 3){
+			torch = 0;
+		}
+	}
 	float FoV = initialFoV;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.
 
 	// Projection matrix : 45� Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
 	ProjectionMatrix = glm::perspective(glm::radians(FoV), 4.0f / 3.0f, 0.1f, 100.0f);
 	// Camera matrix
 	ViewMatrix       = glm::lookAt(
-								initialPosition,           // Camera is here
-								initialPosition+direction, // and looks here : at the same initialPosition, plus "direction"
+								PlayerPosition,           // Camera is here
+								PlayerPosition+direction, // and looks here : at the same PlayerPosition, plus "direction"
 								up                  // Head is up (set to 0,-1,0 to look upside-down)
 						   );
 	switch(status){

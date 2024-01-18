@@ -36,6 +36,13 @@ int main( void )
 	Floor floor1(
 		{-20, -20}, 
 		{20, 20});
+	Plane ceiling(
+		{-20, 1, -20},
+		{20, 1, -20},
+		{20, 1, 20},
+		{-20, 1, 20},
+		50
+	);
 	Wall wall1({-0.5, 0}, {-0.5, 2});
 	Wall wall2({-0.5, 2}, {-0.5, 4});
 	Wall wall3({0.5, 0}, {0.5, 2});
@@ -59,6 +66,7 @@ int main( void )
 	game_screen.addGraphicObject(wall4);
 	game_screen.addGraphicObject(wall5);
 	game_screen.addGraphicObject(wall6);
+	game_screen.addGraphicObject(ceiling);
 	// game_screen.addGraphicObject(wall7);
 	// game_screen.addGraphicObject(wall8);
 	// game_screen.addGraphicObject(wall9);

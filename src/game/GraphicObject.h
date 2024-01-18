@@ -41,7 +41,7 @@ class Floor:public Plane{
         ~Floor();
 };
 
-class Wall:public Plane{
+class Wall:public GraphicObject{
     private:
         glm::vec2 p1, p2;
     public:
