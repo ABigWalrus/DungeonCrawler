@@ -1,5 +1,5 @@
 #version 330 core
-
+// ITS MESSY RIGHT NOW IM GONNA CLEAN UP LATER
 in vec2 UV;
 in vec4 gl_FragCoord;
 in vec4 out_coord;
